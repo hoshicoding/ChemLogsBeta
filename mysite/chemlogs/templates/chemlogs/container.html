@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container {{container.id}}</title>
+    <link rel="stylesheet" href="{% static 'chemlogs/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'chemlogs/images/icon.png' %}">
+</head>
+<body onload="modifySlider('{{container.initial_value}}')">
+    <div class="header">
+        <a href="/chemlogs/chemicalSearch"><img src="{% static 'chemlogs/images/icon.png' %}">
+            <h4>ChemLogs</h4></a>
+    </div>
+    <div class="header-bottom"></div>
+
+    <p class="hoverable"><a href="/chemlogs/chemical/{{container.contents.chemical.id}}/">{{container.contents.chemical}} {{container.getHeader}}</a></p>
+    <p style="position: absolute;">{{container.contents.chemical.cas}}</p>
+    <p style="position: absolute; right: 6vw;">{{container.getDisplayableAmount}} in stock</p>
+    <br>
+    <p><strong>Storage Location: {{container.loc}}</strong></p>
+    <p><strong>Chemical State: {{container.contents.getInfo}}{% if container.molarity is True %} {{container.molarity}}{% endif %}</strong></p>
+    <p><strong>Initial Amount: {{container.getInitialDisplayableAmount}}</strong></p>
+    <br>
+
+    <button type="button" id="addChem" onclick="toggleVisibilityId('transactForm')">Change Amount</button>
+    <div class="content" id="transactForm" style="display: block; padding-top: 1em;">
+        <form method="POST">
+            {% csrf_token %}
+            <p>When you add or remove contents from this container, record it here.</p>
+            <!--<span style="display: inline; margin: 0vw; border: 0vw;">0{{container.getUnits}}</span>
+            {{ transact_form }}
+            <p style="display: inline; margin: 0vw;">{{container.initial_value}}{{container.getUnits}}</p>-->
+            <p>0{{container.getUnits}}{{ transact_form }}{{container.initial_value}}{{container.getUnits}}</p>
+            <br>
+            <input type="submit" id="submit" name="transact_add" value="Add">
+            <input type="submit" id="submit" name="transact_remove" value="Remove">
+            <input type="submit" id="submit" name="transact_fill" value="Fill">
+            <input type="submit" id="submit" name="transact_empty" value="Empty">
+        </form>
+    </div>
+
+    <br>
+    <p>Something looks off? Override the current volume/mass.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ override_form }}
+        <input type="submit" id="submit" name="override" value="Reset">
+    </form>
+
+    <h3>Transaction History</h3>
+    {% if container.noDisplayableTransactions %}
+    <p>No transactions to display</p>
+    {% else %}
+    <table class="indented">
+        <tr>
+            <th>Date/Time</th>
+            <th>Amount ({{container.getUnits}})</th>
+            <th>Added or Removed</th>
+            <th>User</th>
+        </tr>
+        {% for transaction in container.getTransactionsToDisplay %}
+        <tr class="hoverable">
+            <td><a href="/chemlogs/transaction/{{transaction.id}}">{{transaction.time}}</a></td>
+            <td><a href="/chemlogs/transaction/{{transaction.id}}">{{transaction.getAbsoluteAmount}}</a></td>
+            <td><a href="/chemlogs/transaction/{{transaction.id}}">{% if transaction.type == "R" %}Reset{% elif transaction.amount > 0 %}Added{% else %}Removed{% endif %}</a></td>
+            <td><a href="/chemlogs/transaction/{{transaction.id}}">{{transaction.user}}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <script src="{% static 'chemlogs/chemScript.js' %}"> </script>
+
+</body>
+</html>

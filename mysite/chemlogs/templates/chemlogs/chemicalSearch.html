@@ -1,0 +1,90 @@
+<!-- Search for a chemical. Also displays overall transaction history -->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Search</title>
+    <link rel="stylesheet" href="{% static 'chemlogs/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'chemlogs/images/icon.png' %}">
+</head>
+
+<body>
+    <div class="header">
+        <a href="/chemlogs/chemicalSearch"><img src="{% static 'chemlogs/images/icon.png' %}">
+            <h4>ChemLogs</h4></a>
+    </div>
+    <div class="header-bottom"></div>
+
+    <!-- from https://learndjango.com/tutorials/django-search-tutorial -->
+
+    <!-- for unknown reasons the styling for this div wont apply from the stylesheet-->
+    <div style="text-align: center;">
+    <button type="button" id="addChem" onclick="toggleVisibilityId('addChemForm')" class="collapsible">Add New Chemical</button>
+    <div class="content" id="addChemForm">
+    <form method="POST">
+        {% csrf_token %}
+        {{ chemical_create_form.as_p }}
+        <input type="submit" id="submit" name="new_chemical" value="Create">
+    </form></div></div>
+
+    <div id="searchDiv">
+    <form action="/chemlogs/chemicalSearch/" method="GET">
+        {% csrf_token %}
+            <input name="name" type="text" id="searchbar" placeholder=" Search by chemical name, formula, or CAS #">
+            <input type="image" id="search" src="/static/chemlogs/images/search.png"
+            style="height: 5vw;">
+            <br> </div>
+            <input type="checkbox" id="requireSomeInStock" name="requireSomeInStock" value="true">
+            <label for="requireSomeInStock">Only show chemicals that are in stock</label><br>
+    </form><br>
+
+    <div id="results">
+    {% if shown_chemicals %}
+    {% if all_shown %}
+    <h4 id="resultTxt">Search Results:</h4>
+    {% else %}
+    <h4 id="resultTxt"> Top search results:</h4>
+    {% endif %}
+    <ul>
+        {% for chemical in shown_chemicals %}
+        <li class="hoverable"><a href="/chemlogs/chemical/{{chemical.id}}/">
+        {{ chemical }}
+        </a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No results</p>
+    {% endif %}
+    </div>
+
+    <div id="transactTbl">
+    <h3>Overall Transaction History</h3>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Chemical</th><!-- includes state -->
+            <th>Container</th><!-- full header -->
+            <th>Amount</th>
+            <th>Type</th><!-- like add/remove, reset, or create container -->
+        </tr>
+        {% for action in actions %}
+        <tr>
+            <td><a href="/chemlogs/transaction/{{action.id}}">{{action.time.month}}/{{action.time.day}}</a></td> <!-- don't show time of day -->
+            <td><a href="/chemlogs/transaction/{{action.id}}">{{action.container.contents.chemical}} ({{action.container.contents.getInfo}})</a></td>
+            <td><a href="/chemlogs/transaction/{{action.id}}">{{action.container.getHeader}}</a></td>
+            <td><a href="/chemlogs/transaction/{{action.id}}">{{action.amount}}</a></td>
+            <td><a href="/chemlogs/transaction/{{action.id}}">{{action.get_type_display}}</a></td><!-- this gets the verbose name of action.type -->
+        </tr>
+        {% endfor %}
+    </table></div>
+
+</body>
+
+<script src="{% static 'chemlogs/chemScript.js' %}"></script>
+
+</html>

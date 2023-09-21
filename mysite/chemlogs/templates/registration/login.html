@@ -1,0 +1,28 @@
+<!-- from https://learndjango.com/tutorials/django-login-and-logout-tutorial -->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ChemLogs Login</title>
+    <link rel="stylesheet" href="{% static 'chemlogs/style.css' %}">
+</head>
+
+<div id="login">
+  <h2>ChemLogs</h2>
+  <form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" id="submit">Log In</button>
+</form>
+</div>
+
+</html>
+
+
+<!-- to create a user (i.e., when a new chem teacher joins the school), someone will need to go to
+http://[sitename].eastsideprep.org/admin/auth/user/add/ to allow that teacher to use ChemLogs. After
+saving the user, their email address must be added.
+-->

@@ -1,0 +1,286 @@
+/* This is a stylesheet that all of the app's pages will use.
+ * Prepend {% load static %} to a template and link the stylesheet normally.
+ * Example in templates/chemical.html
+*/
+
+body {
+   font-family: Arial, Helvetica, sans-serif;
+   background-color: #f2fbff;
+}
+
+/* header bar on all pages */
+
+.header {
+   font-size: calc(22px + 0.5vw);
+   margin-top: 2vw;
+   padding: 2vw;
+   font-family: Arial, Helvetica, sans-serif;
+   color: #314876;
+   display: float;
+}
+
+.header h4 {
+   display: inline;
+   color: #314876;
+   margin-left: -5px;
+}
+
+.header img {
+   left: 3vw;
+   top: 3vw;
+   height: 20px;
+}
+
+.header-bottom {
+   height: 3vw;
+   width: 100vw;
+   margin: 1vw;
+   background-image: linear-gradient(rgba(150, 150, 150, 0.2), rgba(255, 255, 255, 0));
+}
+/* standard text tags */
+
+h1 {
+   font-size: 8.5vw;
+   color: #103071;
+   margin-bottom: 0.5vh;
+   margin-top: 0.1vh;
+}
+
+h2 {
+   font-size: 6vw;
+   color: #103071;
+}
+
+h3 {
+   color: #314876;/*#1cb16c;*/
+   font-family: Verdana, Tahoma, sans-serif;
+   text-transform: uppercase;
+   font-weight: medium;
+   font-size: 4vw;
+   margin-top: 3vw;
+   margin-bottom: 1vw;
+}
+
+p, p a {
+   font-size: 4vw;
+   color: #608a8e;
+   padding: 0vh;
+   margin: 0vh;
+   text-decoration: none;
+   list-style-type: none;
+}
+
+td, td a {
+   font-size: 3vw;
+   color: #608a8e;
+   padding-bottom: 0.5vh;
+   margin: 0vh;
+   text-decoration: none;
+   list-style-type: none;
+}
+
+li, li a {
+   font-size: 4vw;
+   color: #608a8e;
+   padding: 0vw;
+   margin: 0vw;
+   margin-left: -3vw;
+   text-decoration: none;
+   list-style-type: none;
+}
+
+td {
+   text-align: center;
+}
+
+td a {
+   display: block;
+}
+
+p strong {
+   font-size: 4vw;
+   color: #608a8e;
+}
+
+/* used for state headers on chemical.html */
+.state {
+   position: sticky;
+   top: 0vw;
+   background: #f2fbff;
+   padding: 1.5vw 1.5vw 1.5vw 0vw;
+}
+
+.hoverable:hover {
+   text-decoration: underline;
+   text-decoration-color: #608a8e;
+   overflow:hidden;
+}
+
+th {
+   font-size: 4vw;
+   color: #608a8e;
+}
+
+.indented {
+   padding-left: 4vw;
+   padding-right: 4vw;
+   padding-bottom: 2vw;
+}
+
+a:link, a:visited, a:hover, a:active{
+   text-decoration: none;
+   overflow: hidden;
+ }
+
+/* chemical entry dropdown attributes */
+#addChem {
+   text-align: center;
+   font-size: 1em;
+   outline-color: none; 
+   margin: 3vw;
+   padding-bottom: -2vw;
+   background-color: #608a8e;
+   color: #ffffff; 
+   border-width: 0px; 
+   border-radius: 2vw; 
+   width: 15em; 
+   height: 2.5em;
+}
+
+.edit, .del {
+   color: #ffffff;
+   transition-duration: 0.5s;
+   font-size: 10;
+   border: none;
+   margin: 0vw;
+   padding: 0.7vw 1.6vw 0.9vw; /* top right bottom [left] */
+   border-radius: 2vw;
+   background-color: #608a8e;
+   width: fit-content;
+   height: fit-content;
+   display: inline;
+}
+
+#addChem:hover, .edit:hover {
+   background-color: #4b6d72;
+   overflow:hidden;
+}
+
+#addChemForm {
+   margin-top: 0px;
+   margin-left: 6vw;
+   text-align: left;
+   border: none;
+}
+
+#trSlide {
+   appearance: none; 
+   width: 60%; 
+   height: 5px; 
+   color: #ffffff;
+   background-color: #608a8e; 
+   opacity: 0.6; 
+   margin-left: 15%;
+}
+
+.del {
+   background-color: #f08a42;
+}
+
+.del:hover {
+   background-color: #db7227;
+   overflow:hidden;
+}
+
+#searchDiv {
+   text-align: center;
+   margin: 8vw;
+   margin-bottom: 0vw;
+}
+
+#searchbar, #searchbar:focus-visible {
+   width: 70vw;
+   height: 6vw;
+   background-color: #f2fbff;
+   border: none;
+   border-bottom: 0.5vw solid #314876;
+}
+
+#search {
+   width: 4vw; 
+   height: 9vw;
+   margin-bottom: -4px;
+}
+
+#requireSomeInStock {
+   margin-left: 10vw;
+   height: 3vw;
+}
+
+label {
+   font-size: 3vw;
+}
+
+#resultTxt {
+   margin: -2vw;
+   color: #314876;
+   font-size: 4vw;
+}
+
+#results {
+   padding: 8vw;
+   padding-bottom: 2vw;
+   margin: 6vw;
+   margin-top: 2vw;
+   background-color: #cededd;
+   border-radius: 3vw;
+}
+
+.button {
+   display: flex;
+}
+
+.content{
+   display: block; 
+   margin: 1vw;
+   padding-left: 10vw;
+   text-align:left;
+   background-color: #f2fbff;
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.2s ease-out;
+}
+
+#transactTbl {
+   margin: 6vw;
+   margin-top: 8vw;
+   font-size: 3.5vw;
+}
+
+#login {
+   display: block; 
+   text-align: center;
+   padding: 2vw;
+}
+
+#login {
+   display: block; 
+   margin: 2vw;
+   margin-left: 60vw;
+   padding: 2vw;
+}
+
+#transaction, #chemicalPage {
+   margin: 6vw;
+}
+
+#modifyTransaction p select {
+   background-color: #608a8e;
+   color: #ffffff;
+   padding-left: 1.5vw;
+   padding-bottom: 1vw;
+   font-size: 10;
+   border: none;
+   border-radius: 2vw;
+   width: 60vw;
+}
